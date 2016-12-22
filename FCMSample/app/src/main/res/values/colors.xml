@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Everything I build is free. All Rights Reserved.
+  ~ A singing computer scientist.
+  ~ https://joshuajangblog.wordpress.com/
+  -->
+
+<!--
+  ~ Everything I build is free. All Rights Reserved.
+  ~ A singing computer scientist.
+  ~ Find me on Google.
+  -->
+
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+</resources>

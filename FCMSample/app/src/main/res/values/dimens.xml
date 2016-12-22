@@ -1,0 +1,17 @@
+<!--
+  ~ Everything I build is free. All Rights Reserved.
+  ~ A singing computer scientist.
+  ~ https://joshuajangblog.wordpress.com/
+  -->
+
+<!--
+  ~ Everything I build is free. All Rights Reserved.
+  ~ A singing computer scientist.
+  ~ Find me on Google.
+  -->
+
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+</resources>
