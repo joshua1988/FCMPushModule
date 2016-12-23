@@ -16,13 +16,21 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+
 public class MainActivity extends AppCompatActivity {
+
+    public static final int SERVICE_MISSING = 1;
+    public static final int SERVICE_VERSION_UPDATE_REQUIRED = 1;
+    public static final int SERVICE_DISABLED = 3;
 
     private static final String TAG = "FCMSample";
     String str = null;
@@ -44,12 +52,12 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Push message received : ", Toast.LENGTH_LONG).show();
         }
 
-
         /*서비스에서 인텐트의 값을 브로드캐스트 리시비로 전달하면 Null Point Excepsion 오류가 발생한다.
         아무래도 안드로이드의 액티비티 콜 스택을 제대로 이해하지 못한 상태에서, intent 갱신이나
         추가하는 부분에 있어 기존 액티비티와 충돌하는 걸로 간주된다.
         PendingIntent 를 이용해 intent 의 값을 전달하는 것이 더 정석인 것 같은데
         안드로이드 컴포넌트에 대한 이해가 충분하지 못하여, 실수를 범했다.*/
+
 //        intentFilter = new IntentFilter();
 //        intentFilter.addAction("com.poscoict.fcm.push");
 //
@@ -89,9 +97,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
-//        unregisterReceiver(mReceiver);
         super.onPause();
     }
-
 
 }
