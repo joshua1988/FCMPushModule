@@ -55,13 +55,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService{
     private void sendNotification(String messageBody) {
         // Choose which Activity you want to display on the screen (Either Main or Second)
         Intent intent = new Intent(this, MainActivity.class);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+//        Intent intent = new Intent(this, SecondActivity.class);
 
-        // 추가
+//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("push_content", messageBody);
         intent.putExtra("msg", "text");
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
