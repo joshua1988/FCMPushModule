@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Push message received : ", Toast.LENGTH_SHORT).show();
         }
 
-
+        onNewIntent(getIntent());
 
 //        intent = getIntent();
 //        if (intent.getStringExtra("push_content") != null) {
@@ -68,6 +68,24 @@ public class MainActivity extends AppCompatActivity {
 //        };
 //
 //        registerReceiver(mReceiver, intentFilter);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Log.i(TAG, "onNewIntent");
+
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            Log.i(TAG, "new intent has sth");
+
+            str = intent.getStringExtra("msg");
+            Log.i(TAG, "sth1 is " + str);
+            Log.i(TAG, "sth2 is " + extras.get("msg"));
+            Toast.makeText(this, "Push message received : " + str, Toast.LENGTH_SHORT).show();
+        } else {
+            Log.i(TAG, "new intent has nth");
+        }
     }
 
     @Override

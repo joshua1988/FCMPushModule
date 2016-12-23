@@ -44,7 +44,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService{
 
 
         // Launch Second Activity with the push message
-        launchSecondActivity(remoteMessage.getNotification().getBody());
+//        launchSecondActivity(remoteMessage.getNotification().getBody());
 
         //Calling method to generate notification
         sendNotification(remoteMessage.getNotification().getBody());
@@ -53,9 +53,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService{
     //This method is only generating push notification
     //It is same as we did in earlier posts
     private void sendNotification(String messageBody) {
-        // Choose which Activity you want to display on the screen
+        // Choose which Activity you want to display on the screen (Either Main or Second)
         Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
 
         // 추가

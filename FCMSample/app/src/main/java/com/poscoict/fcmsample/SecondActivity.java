@@ -24,6 +24,6 @@ public class SecondActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_second);
-        Log.i(TAG, "@@ SecondActivity onCreate ");
+        Log.i(TAG, "@@ SecondActivity onCreate");
     }
 }
