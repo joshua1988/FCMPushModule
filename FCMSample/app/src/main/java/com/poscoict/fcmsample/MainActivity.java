@@ -16,15 +16,13 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -51,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
         if (intent.getStringExtra("push_content") != null) {
             Toast.makeText(this, "Push message received : ", Toast.LENGTH_LONG).show();
         }
+
+        getDeviceInfo();
 
         /*서비스에서 인텐트의 값을 브로드캐스트 리시비로 전달하면 Null Point Excepsion 오류가 발생한다.
         아무래도 안드로이드의 액티비티 콜 스택을 제대로 이해하지 못한 상태에서, intent 갱신이나
@@ -98,6 +98,23 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+    }
+
+    private void getDeviceInfo() {
+        getPhoneNumber();
+        getOSVersion();
+    }
+
+    private void getPhoneNumber() {
+        TelephonyManager telemamanger = (TelephonyManager)this.getSystemService(Context.TELEPHONY_SERVICE);
+        String mPhoneNumber  = telemamanger.getLine1Number();
+        Log.i(TAG, "Phone number is : " + mPhoneNumber );
+    }
+
+    private void getOSVersion() {
+        String release = Build.VERSION.RELEASE;
+        int sdkVersion = Build.VERSION.SDK_INT;
+        Log.i(TAG, "Android SDK : " + sdkVersion + " (" + release +")");
     }
 
 }
