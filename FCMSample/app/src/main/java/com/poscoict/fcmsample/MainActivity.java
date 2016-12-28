@@ -134,20 +134,6 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG, "Android SDK : " + sdkVersion + " (" + release +")");
     }
 
-    private JSONObject generatePushJSON() {
-        JSONObject pushJSON = new JSONObject();
-        try {
-            pushJSON.put("id", "fefe");
-            pushJSON.put("device_token", "token");
-            pushJSON.put("device_id", "dv id");
-            pushJSON.put("phone_number", getPhoneNumber());
-            pushJSON.put("message", "from Android");
-        }catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return pushJSON;
-    }
-
     public void sendPushInfo(View v) {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         String URL = "http://192.168.41.79:8080/SmartSafety/restful/fcm-push-service/";
@@ -178,5 +164,19 @@ public class MainActivity extends AppCompatActivity {
             }*/
         };
         requestQueue.add(req);
+    }
+
+    private JSONObject generatePushJSON() {
+        JSONObject pushJSON = new JSONObject();
+        try {
+            pushJSON.put("id", "fefe");
+            pushJSON.put("device_token", "token");
+            pushJSON.put("device_id", "dv id");
+            pushJSON.put("phone_number", getPhoneNumber());
+            pushJSON.put("message", "from Android");
+        }catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return pushJSON;
     }
 }
