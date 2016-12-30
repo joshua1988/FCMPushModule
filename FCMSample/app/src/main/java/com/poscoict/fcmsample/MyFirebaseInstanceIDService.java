@@ -24,6 +24,8 @@ import com.google.firebase.iid.FirebaseInstanceIdService;
 public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
     private static final String TAG = "FCMSample";
 
+    PushMessageVO vo = new PushMessageVO();
+
     @Override
     public void onTokenRefresh() {
 
@@ -32,6 +34,7 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
 
         //Displaying token on logcat
         Log.i(TAG, "Refreshed token: " + refreshedToken);
+        vo.setFCM_TOKEN(refreshedToken);
     }
 
     private void sendRegistrationToServer(String token) {

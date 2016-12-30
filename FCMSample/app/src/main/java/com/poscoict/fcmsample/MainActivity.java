@@ -32,11 +32,15 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+
+import static java.lang.String.valueOf;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "FCMSample";
     String str = null;
+    String message = null;
     TextView textView;
 
     Intent intent;
@@ -58,16 +63,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Log.i(TAG, "@@ onCreate");
 
+        FirebaseMessaging.getInstance().subscribeToTopic("news");
+
         intent = getIntent();
-        Log.i(TAG, "Push Message is : " + intent.getStringExtra("push_content"));
+        message = intent.getStringExtra("push_content");
+        Log.i(TAG, "Push Message is : " + message);
         if (intent.getStringExtra("push_content") != null) {
-            Toast.makeText(this, "Push message received : ", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Push message received : " + message, Toast.LENGTH_LONG).show();
+        } else {
+            Log.i(TAG, "There is no push message." + message);
         }
 
-        getDeviceInfo();
+        Log.i(TAG, "getOSVersion  : " + getOSVersion());
 //        sendPushInfo();
 
-        /*서비스에서 인텐트의 값을 브로드캐스트 리시비로 전달하면 Null Point Excepsion 오류가 발생한다.
+        /*서비스에서 인텐트의 값을 브로드캐스트 리시버로 전달하면 Null Point Exception 오류가 발생한다.
         아무래도 안드로이드의 액티비티 콜 스택을 제대로 이해하지 못한 상태에서, intent 갱신이나
         추가하는 부분에 있어 기존 액티비티와 충돌하는 걸로 간주된다.
         PendingIntent 를 이용해 intent 의 값을 전달하는 것이 더 정석인 것 같은데
@@ -115,11 +125,6 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
     }
 
-    private void getDeviceInfo() {
-        getPhoneNumber();
-        getOSVersion();
-    }
-
     private String getPhoneNumber() {
         String mPhoneNumber = null;
         TelephonyManager telemamanger = (TelephonyManager)this.getSystemService(Context.TELEPHONY_SERVICE);
@@ -128,10 +133,17 @@ public class MainActivity extends AppCompatActivity {
         return mPhoneNumber;
     }
 
-    private void getOSVersion() {
+    private String getOSVersion() {
         String release = Build.VERSION.RELEASE;
         int sdkVersion = Build.VERSION.SDK_INT;
-        Log.i(TAG, "Android SDK : " + sdkVersion + " (" + release +")");
+        String result = "Android ".concat(release).concat(" (").concat(String.valueOf(sdkVersion)).concat(")");
+        return result;
+    }
+
+    private String getDeviceId() {
+        TelephonyManager tManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+        String uuid = tManager.getDeviceId();
+        return uuid;
     }
 
     public void sendPushInfo(View v) {
@@ -169,11 +181,10 @@ public class MainActivity extends AppCompatActivity {
     private JSONObject generatePushJSON() {
         JSONObject pushJSON = new JSONObject();
         try {
-            pushJSON.put("id", "fefe");
-            pushJSON.put("device_token", "token");
-            pushJSON.put("device_id", "dv id");
+            pushJSON.put("device_id", getDeviceId());
+            pushJSON.put("device_token", FirebaseInstanceId.getInstance().getToken());
+            pushJSON.put("device_os", getOSVersion());
             pushJSON.put("phone_number", getPhoneNumber());
-            pushJSON.put("message", "from Android");
         }catch (JSONException e) {
             e.printStackTrace();
         }

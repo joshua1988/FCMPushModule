@@ -31,29 +31,16 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService{
         Log.i(TAG, "@@@@@ Message Received getTitle : " + remoteMessage.getNotification().getTitle());
         Log.i(TAG, "@@@@@ Message Received Notification Message Body : " + remoteMessage.getNotification().getBody());
 
-        // MainActivity
-//        Intent mainIntent = new Intent(this, MainActivity.class);
-//        mainIntent.putExtra("push_content", remoteMessage.getNotification().getBody());
-//        mainIntent.setAction("com.poscoict.fcm.push");
-//        Log.i(TAG, "@@@@ Firbase mainintent action : " + mainIntent.getAction());
-
-        // BroadCastReceiver
-//        Intent pushIntent = new Intent();
-//        pushIntent.putExtra("push_content", remoteMessage.getNotification().getBody());
-//        Log.i(TAG, "@@@@ Firbase mainintent action : " + pushIntent.getAction());
-//        sendBroadcast(pushIntent);
-
-
-        // Launch Second Activity with the push message
+        // Instant launch Second Activity with the push message
 //        launchSecondActivity(remoteMessage.getNotification().getBody());
 
         //Calling method to generate notification
-        sendNotification(remoteMessage.getNotification().getBody());
+        sendNotification(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
     }
 
     //This method is only generating push notification
     //It is same as we did in earlier posts
-    private void sendNotification(String messageBody) {
+    private void sendNotification(String messageTitle, String messageBody) {
         // Choose which Activity you want to display on the screen (Either Main or Second)
         Intent intent = new Intent(this, MainActivity.class);
 //        Intent intent = new Intent(this, SecondActivity.class);
@@ -67,7 +54,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService{
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("Firebase Push Notification")
+                .setContentTitle(messageTitle)
                 .setContentText(messageBody)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)

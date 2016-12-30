@@ -10,6 +10,8 @@ public class PushMessageVO {
     private String OS_VERSION;
     private String PHONE_NUMBER;
 
+    public PushMessageVO() {}
+
     public PushMessageVO(String dev_id, String os_version, String phone_number) {
         DEV_ID = dev_id;
         OS_VERSION = os_version;

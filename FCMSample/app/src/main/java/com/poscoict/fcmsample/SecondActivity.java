@@ -35,7 +35,7 @@ public class SecondActivity extends AppCompatActivity {
         intent = getIntent();
         str = intent.getStringExtra("push_content");
 
-        textView = (TextView) findViewById(R.id.txtView2);
-        textView.setText("You have received : " + str);
+        textView = (TextView) findViewById(R.id.contentTextView);
+        textView.setText("수신한 푸쉬 메시지 내용 : " + str);
     }
 }
