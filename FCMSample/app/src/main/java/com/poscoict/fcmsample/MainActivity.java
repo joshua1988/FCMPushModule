@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "FCMSample";
     String str = null;
     String message = null;
-    TextView textView;
+    TextView textView, deviceIDView, deviceOSView, phoneNumberView;
 
     Intent intent;
     IntentFilter intentFilter;
@@ -77,6 +77,8 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG, "getOSVersion  : " + getOSVersion());
 //        sendPushInfo();
 
+        displayDeviceInfo();
+
         /*서비스에서 인텐트의 값을 브로드캐스트 리시버로 전달하면 Null Point Exception 오류가 발생한다.
         아무래도 안드로이드의 액티비티 콜 스택을 제대로 이해하지 못한 상태에서, intent 갱신이나
         추가하는 부분에 있어 기존 액티비티와 충돌하는 걸로 간주된다.
@@ -98,6 +100,15 @@ public class MainActivity extends AppCompatActivity {
 //        };
 //
 //        registerReceiver(mReceiver, intentFilter);
+    }
+
+    private void displayDeviceInfo() {
+        deviceIDView = (TextView) findViewById(R.id.deviceIdTextView);
+        deviceIDView.setText(getDeviceId());
+        deviceOSView = (TextView) findViewById(R.id.osVerTextView);
+        deviceOSView.setText(getOSVersion());
+        phoneNumberView = (TextView) findViewById(R.id.phoneNumberTextView);
+        phoneNumberView.setText(getPhoneNumber());
     }
 
     @Override
